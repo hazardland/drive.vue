@@ -45,7 +45,8 @@
     },
     "rules": {
         "indent": "off",
-        "quote-props": "off"
+        "quote-props": "off",
+        "camelcase": "off"
     }
   },
   "browserslist": [

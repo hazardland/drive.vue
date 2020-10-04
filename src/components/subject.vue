@@ -3,7 +3,7 @@
         :class='{active:($parent.subject==id)}'
         @click='$parent.subject=id'
     >
-        {{ id }}. {{ title }}
+        {{ id }}. {{ title }} ({{fails}})
     </div>
 </template>
 
@@ -12,6 +12,12 @@ export default {
     props: {
         id: Number,
         title: String
+    },
+    computed: {
+        fails () {
+            console.log('computing')
+            return this.$store.state.fails[this.id]
+        }
     }
 }
 </script>

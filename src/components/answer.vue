@@ -18,9 +18,7 @@ export default {
         click () {
             if (!this.$parent.clicked) {
                 this.$parent.clicked = this.index
-                if (!this.correct) {
-                    this.$parent.fail()
-                }
+                this.$store.commit('step', { 'step': this.correct ? 1 : -1, 'ticket': this.$parent.id })
             }
         }
     }

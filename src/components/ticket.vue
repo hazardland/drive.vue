@@ -2,7 +2,13 @@
     <div class='ticket'>
         <img :src="'/images/'+id+'.jpg'" v-if='crop!=3'>
         <div class='question'>
-            <div class='id'>{{ id }}:</div>
+            <span class='id'>{{ id }}:</span>
+            <span class='fail' v-show='fail'>
+                (ცუდად ვიცი)
+            </span>
+            <span class='success' v-show='success'>
+                (კარგად ვიცი)
+            </span>
             {{ question }}
         </div>
         <div class='answers'>
@@ -45,13 +51,18 @@ export default {
             return answers.sort(function () {
                 return 0.5 - Math.random()
             })
-        },
-        fail () {
-            return true
         }
     },
-    mounted () {
-        this.answers = this.random(this.answers)
+    // mounted () {
+    //     this.answers = this.random(this.answers)
+    // },
+    computed: {
+        fail () {
+            return this.$store.state.tickets[this.id] < 0
+        },
+        success () {
+            return this.$store.state.tickets[this.id] >= 3
+        }
     }
 }
 </script>

@@ -1,7 +1,13 @@
 <template>
     <div class='home'>
         <div class='status'>
-            სულ {{count}} ბილეთი
+            გაფილტრულია {{ filtered_count }} ბილეთი
+         </div>
+        <div class='status' @click='faileds=!faileds' :class='{active:faileds}'>
+            რაც ამ თავში მეშლება ({{faileds_count}})
+        </div>
+        <div class='status' @click='notgoods=!notgoods' :class='{active:notgoods}'>
+            რაც ამ თავში კარგად არ ვიცი ({{notgoods_count}})
         </div>
         <div class='categories'>
             <category
@@ -41,9 +47,6 @@
 import Ticket from '@/components/ticket.vue'
 import Subject from '@/components/subject.vue'
 import Category from '@/components/category.vue'
-import tickets from '@/data/tickets.json'
-import categories from '@/data/categories.json'
-import subjects from '@/data/subjects.json'
 
 export default {
     name: 'Home',
@@ -55,7 +58,10 @@ export default {
     methods: {
         filter () {
             const result = {}
-            let count = 0
+            let filtered_count = 0
+            let faileds_count = 0
+            let notgoods_count = 0
+            let goods_count = 0
             for (const [key, ticket] of Object.entries(this.tickets)) {
                 let match = true
                 if (ticket.subject !== this.subject) {
@@ -65,11 +71,32 @@ export default {
                     match = false
                 }
                 if (match) {
+                    if (this.$store.state.tickets[key] >= 0) {
+                        if (this.faileds) {
+                            match = false
+                        }
+                    } else {
+                        faileds_count++
+                    }
+                    if (this.$store.state.tickets[ticket.id] >= 3) {
+                        if (this.notgoods) {
+                            match = false
+                        }
+                        goods_count++
+                    } else {
+                        notgoods_count++
+                    }
+                }
+
+                if (match) {
                     result[key] = ticket
-                    count++
+                    filtered_count++
                 }
             }
-            this.count = count
+            this.filtered_count = filtered_count
+            this.faileds_count = faileds_count
+            this.notgoods_count = notgoods_count
+            this.goods_count = goods_count
             return result
         }
     },
@@ -77,10 +104,12 @@ export default {
         return {
             subject: 1,
             category: 2,
-            count: 0,
-            tickets: tickets,
-            categories: categories,
-            subjects: subjects
+            filtered_count: 0,
+            faileds_count: 0,
+            notgoods_count: 0,
+            goods_count: 0,
+            faileds: false,
+            notgoods: false
         }
     }
 }
