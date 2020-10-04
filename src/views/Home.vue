@@ -1,13 +1,29 @@
 <template>
     <div class='home'>
-        <div class='status'>
-            გაფილტრულია {{ filtered_count }} ბილეთი
-         </div>
-        <div class='status' @click='faileds=!faileds' :class='{active:faileds}'>
-            რაც ამ თავში მეშლება ({{faileds_count}})
-        </div>
-        <div class='status' @click='notgoods=!notgoods' :class='{active:notgoods}'>
-            რაც ამ თავში კარგად არ ვიცი ({{notgoods_count}})
+        <Progress
+            :total='subject_total'
+            :failed='subject_failed'
+            :learning='subject_learning'
+            :studied='subject_studied'
+            :sticky='true'
+        >
+        </Progress>
+        <div style='margin-top:10px;display:inline-block'>
+            <div class='status'>
+                {{ count }}/{{subject_total}} ბილეთი
+            </div>
+            <div class='status' @click='show="all"' :class='{active:show=="all"}'>
+                ყველა: {{subject_total}}
+            </div>
+            <div class='status' @click='show="failed"' :class='{active:show=="failed"}'>
+                რაშიც ჩავიჭერი: {{subject_failed}}
+            </div>
+            <div class='status' @click='show="learning"' :class='{active:show=="learning"}'>
+                რასაც ვსწავლობ: {{subject_learning}}
+            </div>
+            <div class='status' @click='show="fresh"' :class='{active:show=="fresh"}'>
+                რაც ახალია: {{subject_fresh}}
+            </div>
         </div>
         <div class='categories'>
             <category
@@ -47,22 +63,21 @@
 import Ticket from '@/components/ticket.vue'
 import Subject from '@/components/subject.vue'
 import Category from '@/components/category.vue'
+import Progress from '@/components/progress.vue'
 
 export default {
     name: 'Home',
     components: {
         Ticket,
         Subject,
-        Category
+        Category,
+        Progress
     },
     methods: {
         filter () {
             const result = {}
-            let filtered_count = 0
-            let faileds_count = 0
-            let notgoods_count = 0
-            let goods_count = 0
-            for (const [key, ticket] of Object.entries(this.tickets)) {
+            let count = 0
+            for (const ticket of Object.values(this.tickets)) {
                 let match = true
                 if (ticket.subject !== this.subject) {
                     match = false
@@ -70,47 +85,72 @@ export default {
                 if (!ticket.categories.includes(this.category)) {
                     match = false
                 }
-                if (match) {
-                    if (this.$store.state.tickets[key] >= 0) {
-                        if (this.faileds) {
+                if (match && this.show !== 'all') {
+                    const score = this.$store.state.scores[ticket.id]
+
+                    if (score === null) {
+                        if (this.show !== 'fresh') {
                             match = false
                         }
                     } else {
-                        faileds_count++
-                    }
-                    if (this.$store.state.tickets[ticket.id] >= 3) {
-                        if (this.notgoods) {
-                            match = false
+                        if (this.show === 'fresh') {
+                            if (this.score !== null) {
+                                match = false
+                            }
+                        } if (this.show === 'failed') {
+                            if (score >= 0) {
+                                match = false
+                            }
+                        } else if (this.show === 'learning') {
+                            if (score >= 3) {
+                                match = false
+                            }
+                        } else if (this.show === 'studied') {
+                            if (score <= 3) {
+                                match = false
+                            }
                         }
-                        goods_count++
-                    } else {
-                        notgoods_count++
                     }
                 }
 
                 if (match) {
-                    result[key] = ticket
-                    filtered_count++
+                    result[ticket.id] = ticket
+                    count++
                 }
             }
-            this.filtered_count = filtered_count
-            this.faileds_count = faileds_count
-            this.notgoods_count = notgoods_count
-            this.goods_count = goods_count
+            this.count = count
             return result
         }
     },
     data () {
         return {
-            subject: 1,
-            category: 2,
-            filtered_count: 0,
-            faileds_count: 0,
-            notgoods_count: 0,
-            goods_count: 0,
-            faileds: false,
-            notgoods: false
+            count: 0,
+            show: 'all' // fresh, failed, learning, studied
         }
+    },
+    computed: {
+        category () {
+            return this.$store.state.category
+        },
+        subject () {
+            return this.$store.state.subject
+        },
+        subject_failed () {
+            return this.$store.state.subject_failed[this.subject]
+        },
+        subject_studied () {
+            return this.$store.state.subject_studied[this.subject]
+        },
+        subject_learning () {
+            return this.$store.state.subject_learning[this.subject]
+        },
+        subject_fresh () {
+            return this.$store.state.subject_fresh[this.subject]
+        },
+        subject_total () {
+            return this.$store.state.subject_total[this.subject]
+        }
+
     }
 }
 

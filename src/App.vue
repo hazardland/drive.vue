@@ -5,4 +5,7 @@
 </template>
 
 <style lang="scss">
+    html {
+        font-family: Verdana
+    }
 </style>

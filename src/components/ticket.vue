@@ -2,13 +2,15 @@
     <div class='ticket'>
         <img :src="'/images/'+id+'.jpg'" v-if='crop!=3'>
         <div class='question'>
-            <span class='id'>{{ id }}:</span>
-            <span class='fail' v-show='fail'>
-                (ცუდად ვიცი)
-            </span>
-            <span class='success' v-show='success'>
-                (კარგად ვიცი)
-            </span>
+            <div>
+                <span class='id'>{{ id }}:</span>
+                <span class='fail' v-show='fail'>
+                    (ცუდად ვიცი)
+                </span>
+                <span class='success' v-show='success'>
+                    (კარგად ვიცი)
+                </span>
+            </div>
             {{ question }}
         </div>
         <div class='answers'>
@@ -58,10 +60,10 @@ export default {
     // },
     computed: {
         fail () {
-            return this.$store.state.tickets[this.id] < 0
+            return this.$store.state.scores[this.id] < 0
         },
         success () {
-            return this.$store.state.tickets[this.id] >= 3
+            return this.$store.state.scores[this.id] >= 3
         }
     }
 }
@@ -73,6 +75,7 @@ export default {
         padding: 1px;
         max-width: 1006px;
         margin-bottom: 30px;
+        border: 1px solid silver;
     }
     .id{
 

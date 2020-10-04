@@ -17,16 +17,9 @@ Vue.prototype.categories = categories
 new Vue({
     router,
     store,
-    created () {
+    beforeCreate () {
         this.$store.commit('init')
         this.$store.commit('step', { 'step': -1, 'ticket': 666 })
-
-        // console.log(this.tickets[666])
-        // this.learn.init(this)
-        // this.learn.fail(666)
-        // console.log(this.learn.data.tickets)
-        // console.log(this.learn.data.fails)
-        // console.log(this.learn.data.success)
     },
     render: h => h(App)
 }).$mount('#app')
