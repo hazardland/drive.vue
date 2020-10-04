@@ -1,6 +1,6 @@
 <template>
     <div class='ticket'>
-        <img :src="'/images/'+id+'.jpg'" v-if='crop!=3'>
+        <img :src="'./images/'+id+'.jpg'" v-if='crop!=3'>
         <div class='question'>
             <div>
                 <span class='id'>{{ id }}:</span>
