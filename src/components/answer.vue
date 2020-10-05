@@ -30,13 +30,13 @@ export default {
         cursor: pointer;
         color: #fff;
         background: linear-gradient(to right, #244e5b 0%,#031d26 50%,#244e5b 100%);
-        width: 456px;
+        width: 459px;
         padding: 20px;
         display: flex;
         align-items: center;
         font-size: 23px!important;
         font-weight: 900;
-        border: 3px solid #fff!important;
+        border: 2px solid #fff!important;
     }
     .number{
         color: #042f4f;

@@ -1,5 +1,5 @@
 <template>
-    <span style='padding-left:5px'>{{display}}</span>
+    <span style='padding-left:5px;color:white'>{{display}}</span>
 </template>
 
 <script>

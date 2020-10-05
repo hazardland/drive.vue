@@ -81,7 +81,6 @@ export default {
         padding: 1px;
         max-width: 1006px;
         margin-bottom: 30px;
-        border: 1px solid silver;
         position: relative;
     }
     .id{
@@ -92,8 +91,9 @@ export default {
         color: #222;
         color: #fff;
         padding: 10px;
-        border-bottom: 3px solid #fff;
         background-color: rgba(35, 47, 54, .9);
+        border: 3px solid white;
+        border-bottom: 1px solid white;
         text-align: center;
         font-size: 24px;
         font-weight: 900;

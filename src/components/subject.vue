@@ -61,7 +61,7 @@ export default {
 <style>
     .subject {
         cursor: pointer;
-        background: lightgrey;
+        background: grey;
         border: 1px solid grey;
         margin: 1px;
         padding: 6px;

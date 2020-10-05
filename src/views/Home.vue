@@ -127,6 +127,7 @@ export default {
             return result
         },
         mode (show) {
+            this.reset()
             this.show = show
         },
         reset () {
