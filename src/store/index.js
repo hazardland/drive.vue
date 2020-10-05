@@ -75,7 +75,6 @@ export default new Vuex.Store({
         },
         init (state) {
             console.log('initing')
-            console.log(this._vm.tickets[666])
             let load = {}
             if (localStorage.getItem('scores')) {
                 load = JSON.parse(localStorage.getItem('scores'))

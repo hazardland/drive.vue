@@ -19,7 +19,6 @@ new Vue({
     store,
     beforeCreate () {
         this.$store.commit('init')
-        this.$store.commit('step', { 'step': -1, 'ticket': 666 })
     },
     render: h => h(App)
 }).$mount('#app')

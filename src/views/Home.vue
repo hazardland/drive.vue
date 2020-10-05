@@ -12,16 +12,16 @@
             <div class='status'>
                 {{ count }}/{{subject_total}} ბილეთი
             </div>
-            <div class='status' @click='show="all"' :class='{active:show=="all"}'>
+            <div class='status' @click='mode("all")' :class='{active:show=="all"}'>
                 ყველა: {{subject_total}}
             </div>
-            <div class='status' @click='show="failed"' :class='{active:show=="failed"}'>
+            <div class='status' @click='mode("failed")' :class='{active:show=="failed"}'>
                 რაშიც ჩავიჭერი: {{subject_failed}}
             </div>
-            <div class='status' @click='show="learning"' :class='{active:show=="learning"}'>
+            <div class='status' @click='mode("learning")' :class='{active:show=="learning"}'>
                 რასაც ვსწავლობ: {{subject_learning}}
             </div>
-            <div class='status' @click='show="fresh"' :class='{active:show=="fresh"}'>
+            <div class='status' @click='mode("fresh")' :class='{active:show=="fresh"}'>
                 რაც ახალია: {{subject_fresh}}
             </div>
             <timer ref="timer"></timer>
@@ -127,7 +127,6 @@ export default {
             return result
         },
         mode (show) {
-            this.reset()
             this.show = show
         },
         reset () {
