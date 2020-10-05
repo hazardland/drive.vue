@@ -15,6 +15,7 @@ export default {
     },
     methods: {
         click () {
+            this.$parent.reset()
             this.$store.commit('category', this.id)
         }
     }

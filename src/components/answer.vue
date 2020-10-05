@@ -17,7 +17,7 @@ export default {
     methods: {
         click () {
             if (!this.$parent.clicked) {
-                this.$parent.clicked = this.index
+                this.$parent.answer(this.index)
                 this.$store.commit('step', { 'step': this.correct ? 1 : -1, 'ticket': this.$parent.id })
             }
         }
@@ -35,7 +35,6 @@ export default {
         display: flex;
         align-items: center;
         font-size: 23px!important;
-        font-family: "BPG Rioni",Arial,Sylfaen,sans-serif!important;
         font-weight: 900;
         border: 3px solid #fff!important;
     }

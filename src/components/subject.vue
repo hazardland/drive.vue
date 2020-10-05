@@ -51,6 +51,7 @@ export default {
     },
     methods: {
         click () {
+            this.$parent.reset()
             this.$store.commit('subject', this.id)
         }
     }

@@ -24,6 +24,7 @@
             <div class='status' @click='show="fresh"' :class='{active:show=="fresh"}'>
                 რაც ახალია: {{subject_fresh}}
             </div>
+            <timer ref="timer"></timer>
         </div>
         <div class='categories'>
             <category
@@ -64,6 +65,7 @@ import Ticket from '@/components/ticket.vue'
 import Subject from '@/components/subject.vue'
 import Category from '@/components/category.vue'
 import Progress from '@/components/progress.vue'
+import Timer from '@/components/timer.vue'
 
 export default {
     name: 'Home',
@@ -71,7 +73,8 @@ export default {
         Ticket,
         Subject,
         Category,
-        Progress
+        Progress,
+        Timer
     },
     methods: {
         filter () {
@@ -79,35 +82,37 @@ export default {
             let count = 0
             for (const ticket of Object.values(this.tickets)) {
                 let match = true
-                if (ticket.subject !== this.subject) {
-                    match = false
-                }
-                if (!ticket.categories.includes(this.category)) {
-                    match = false
-                }
-                if (match && this.show !== 'all') {
-                    const score = this.$store.state.scores[ticket.id]
+                if (!this.ignore.includes(ticket.id)) {
+                    if (ticket.subject !== this.subject) {
+                        match = false
+                    }
+                    if (!ticket.categories.includes(this.category)) {
+                        match = false
+                    }
+                    if (match && this.show !== 'all') {
+                        const score = this.$store.state.scores[ticket.id]
 
-                    if (score === null) {
-                        if (this.show !== 'fresh') {
-                            match = false
-                        }
-                    } else {
-                        if (this.show === 'fresh') {
-                            if (this.score !== null) {
+                        if (score === null) {
+                            if (this.show !== 'fresh') {
                                 match = false
                             }
-                        } if (this.show === 'failed') {
-                            if (score >= 0) {
-                                match = false
-                            }
-                        } else if (this.show === 'learning') {
-                            if (score >= 3) {
-                                match = false
-                            }
-                        } else if (this.show === 'studied') {
-                            if (score <= 3) {
-                                match = false
+                        } else {
+                            if (this.show === 'fresh') {
+                                if (this.score !== null) {
+                                    match = false
+                                }
+                            } if (this.show === 'failed') {
+                                if (score >= 0) {
+                                    match = false
+                                }
+                            } else if (this.show === 'learning') {
+                                if (score >= 3) {
+                                    match = false
+                                }
+                            } else if (this.show === 'studied') {
+                                if (score <= 3) {
+                                    match = false
+                                }
                             }
                         }
                     }
@@ -120,12 +125,21 @@ export default {
             }
             this.count = count
             return result
+        },
+        mode (show) {
+            this.reset()
+            this.show = show
+        },
+        reset () {
+            this.ignore = []
+            this.$refs.timer.reset()
         }
     },
     data () {
         return {
             count: 0,
-            show: 'all' // fresh, failed, learning, studied
+            show: 'all', // fresh, failed, learning, studied
+            ignore: []
         }
     },
     computed: {

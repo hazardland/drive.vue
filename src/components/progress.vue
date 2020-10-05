@@ -1,6 +1,6 @@
 <template>
 
-    <div style='width:100%;background:white;display:inline-block;border:0.5px solid black'
+    <div style='width:100%;background:white;display:inline-block;border:0.5px solid black; z-index: 99999'
     :class='{sticky:sticky}'>
         <div style='float:left;height:10px;background:red;width:0%' :style='{width:failed_percent}'></div>
         <div style='float:left;height:10px;background:blue;width:0%' :style='{width:learning_percent}'></div>

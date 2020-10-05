@@ -1,15 +1,12 @@
 <template>
-    <div class='ticket'>
+    <div class='ticket' style="position:relative;">
+        <div class='indicator' :class='{red:failed, green:studied, blue:learning}'>
+            {{$store.state.scores[this.id]}}
+        </div>
         <img :src="'./images/'+id+'.jpg'" v-if='crop!=3'>
         <div class='question'>
             <div>
                 <span class='id'>{{ id }}:</span>
-                <span class='fail' v-show='fail'>
-                    (ცუდად ვიცი)
-                </span>
-                <span class='success' v-show='success'>
-                    (კარგად ვიცი)
-                </span>
             </div>
             {{ question }}
         </div>
@@ -53,17 +50,26 @@ export default {
             return answers.sort(function () {
                 return 0.5 - Math.random()
             })
+        },
+        answer (id) {
+            this.clicked = id
+            this.$parent.ignore.push(this.id)
         }
     },
     // mounted () {
     //     this.answers = this.random(this.answers)
     // },
     computed: {
-        fail () {
+        failed () {
             return this.$store.state.scores[this.id] < 0
         },
-        success () {
+        studied () {
             return this.$store.state.scores[this.id] >= 3
+        },
+        learning () {
+            return this.$store.state.scores[this.id] !== null &&
+                   this.$store.state.scores[this.id] >= 0 &&
+                   this.$store.state.scores[this.id] < 3
         }
     }
 }
@@ -76,6 +82,7 @@ export default {
         max-width: 1006px;
         margin-bottom: 30px;
         border: 1px solid silver;
+        position: relative;
     }
     .id{
 
@@ -95,5 +102,24 @@ export default {
         display: flex!important;
         flex-wrap: wrap;
         width: 100%;
+    }
+    .indicator{
+        height:30px;
+        width:30px;
+        position:absolute;
+        top:5px;
+        left:5px;
+        text-align: center;
+        color: white;
+        line-height: 30px;
+    }
+    .red{
+        background-color: red;
+    }
+    .blue{
+        background-color: blue;
+    }
+    .green{
+        background-color: green;
     }
 </style>
