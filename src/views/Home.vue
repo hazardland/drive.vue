@@ -78,9 +78,10 @@ export default {
     },
     methods: {
         filter () {
-            const result = {}
+            const result = []
             let count = 0
-            for (const ticket of Object.values(this.tickets)) {
+            // for (const ticket of Object.values(this.tickets)) {
+            for (const ticket of this.tickets) {
                 let match = true
                 if (!this.ignore.includes(ticket.id)) {
                     if (ticket.subject !== this.subject) {
@@ -119,12 +120,15 @@ export default {
                 }
 
                 if (match) {
-                    result[ticket.id] = ticket
+                    result.push(ticket)
                     count++
                 }
             }
             this.count = count
             return result
+            // return result.sort(function () {
+            //     return 0.5 - Math.random()
+            // })
         },
         mode (show) {
             this.reset()

@@ -9,7 +9,16 @@ import subjects from '@/data/subjects.json'
 
 Vue.config.productionTip = false
 
-Vue.prototype.tickets = tickets
+function shuffle (object) {
+    const keys = Object.keys(object).sort(a => 0.5 - Math.random())
+    const result = []
+    for (const index of keys) {
+        result.push(object[index])
+    }
+    return result
+}
+
+Vue.prototype.tickets = shuffle(tickets)
 Vue.prototype.subjects = subjects
 Vue.prototype.categories = categories
 // Vue.prototype.learn = new Learn()

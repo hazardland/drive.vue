@@ -4,7 +4,7 @@
             {{$store.state.scores[this.id]}}
         </div>
         <img :src="'./images/'+id+'.jpg'" v-if='crop!=3'>
-        <div class='question'>
+        <div class='question' @click='info=!info'>
             <div>
                 <span class='id'>{{ id }}:</span>
             </div>
@@ -18,7 +18,7 @@
                 :correct='answer.correct'>
             </answer>
         </div>
-        <div class='description' v-show='false'>
+        <div class='description' v-show='info'>
             {{ description }}
         </div>
     </div>
@@ -42,7 +42,8 @@ export default {
     },
     data () {
         return {
-            clicked: false
+            clicked: false,
+            info: false
         }
     },
     methods: {
@@ -97,6 +98,7 @@ export default {
         text-align: center;
         font-size: 24px;
         font-weight: 900;
+        cursor: pointer;
     }
     .answers{
         display: flex!important;
@@ -112,6 +114,12 @@ export default {
         text-align: center;
         color: white;
         line-height: 30px;
+    }
+    .description{
+        color:silver;
+        width: 982px;
+        padding: 10px;
+        border: 2px solid white;
     }
     .red{
         background-color: red;

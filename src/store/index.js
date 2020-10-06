@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-function random (answers) {
-    return answers.sort(function () {
+function random (array) {
+    return array.sort(function () {
         return 0.5 - Math.random()
     })
 }
@@ -52,7 +52,8 @@ export default new Vuex.Store({
             reset_subjects(this._vm.subjects, state.subject_learning)
             reset_subjects(this._vm.subjects, state.subject_studied)
 
-            for (const ticket of Object.values(this._vm.tickets)) {
+            // for (const ticket of Object.values(this._vm.tickets)) {
+            for (const ticket of this._vm.tickets) {
                 if (!ticket.categories.includes(state.category)) {
                     continue
                 }
@@ -79,7 +80,8 @@ export default new Vuex.Store({
             if (localStorage.getItem('scores')) {
                 load = JSON.parse(localStorage.getItem('scores'))
             }
-            for (const ticket of Object.values(this._vm.tickets)) {
+            // for (const ticket of Object.values(this._vm.tickets)) {
+            for (const ticket of this._vm.tickets) {
                 Vue.set(state.scores, ticket.id, ticket.id in load ? load[ticket.id] : null)
                 ticket.answers = random(ticket.answers)
             }
