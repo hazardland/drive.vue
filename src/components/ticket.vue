@@ -120,6 +120,7 @@ export default {
         width: 982px;
         padding: 10px;
         border: 2px solid white;
+        font-size: 20px;
     }
     .red{
         background-color: red;
