@@ -1,6 +1,6 @@
 <template>
     <div style="text-align:center;display:inline-block;margin-right:15px;vertical-align:top;width: 250px; margin-bottom: 25px">
-        <img :src="'/images/'+name+'.svg'" style="width:160px">
+        <img :src="'./images/'+name+'.svg'" style="width:160px">
         <div v-if='title'>
             <span style='max-width:200px;text-align:center;'><small>{{title}}</small></span>
         </div>
