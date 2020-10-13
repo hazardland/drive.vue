@@ -22,6 +22,8 @@ function reset_subjects (subjects, array) {
 
 export default new Vuex.Store({
     state: {
+        greeted: false,
+        // asa dasa?
         subject: 1,
         category: 2,
         scores: {},
@@ -87,6 +89,11 @@ export default new Vuex.Store({
             }
             console.log(state)
             this.commit('calculate')
+            if (localStorage.getItem('greeted') !== null) {
+                state.greeted = localStorage.getItem('greeted')
+                console.log(state.greeted && true)
+                console.log(state.greeted)
+            }
         },
         step (state, payload) {
             const step = payload.step
@@ -113,6 +120,10 @@ export default new Vuex.Store({
         subject (state, id) {
             state.subject = id
             this.commit('calculate')
+        },
+        greet (state) {
+            state.greeted = true
+            localStorage.setItem('greeted', true)
         }
     }
 })

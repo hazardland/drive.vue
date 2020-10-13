@@ -8,6 +8,7 @@
             :sticky='true'
         >
         </Progress>
+        <modal :visible='!greeted'></modal>
         <div style='margin-top:10px;display:inline-block'>
             <div class='status'>
                 {{ count }}/{{subject_total}} ბილეთი
@@ -16,13 +17,13 @@
                 ყველა: {{subject_total}}
             </div>
             <div class='status' @click='mode("failed")' :class='{active:show=="failed"}'>
-                რაშიც ჩავიჭერი: {{subject_failed}}
+                რაშიც ჩავიჭერი: {{subject_failed}} <div class='red square'></div>
             </div>
             <div class='status' @click='mode("learning")' :class='{active:show=="learning"}'>
-                რასაც ვსწავლობ: {{subject_learning}}
+                რასაც ვსწავლობ: {{subject_learning}} <div class='blue square'></div>
             </div>
             <div class='status' @click='mode("fresh")' :class='{active:show=="fresh"}'>
-                რაც ახალია: {{subject_fresh}}
+                რაც ახალია: {{subject_fresh}} <div class='square'></div>
             </div>
             <timer ref="timer"></timer>
         </div>
@@ -66,6 +67,7 @@ import Subject from '@/components/subject.vue'
 import Category from '@/components/category.vue'
 import Progress from '@/components/progress.vue'
 import Timer from '@/components/timer.vue'
+import Modal from '@/components/modal.vue'
 
 export default {
     name: 'Home',
@@ -74,7 +76,8 @@ export default {
         Subject,
         Category,
         Progress,
-        Timer
+        Timer,
+        Modal
     },
     methods: {
         filter () {
@@ -167,8 +170,10 @@ export default {
         },
         subject_total () {
             return this.$store.state.subject_total[this.subject]
+        },
+        greeted () {
+            return this.$store.state.greeted
         }
-
     }
 }
 
@@ -191,5 +196,17 @@ export default {
     .subjects {
         max-width: 200px;
         float:left;
+    }
+    .square{
+        width:15px;
+        height:15px;
+        background:white;
+        display:inline-block;
+        vertical-align:middle;
+        margin-top:-3px;
+        border:1px solid black;
+    }
+    .blue {
+        background-color: blue
     }
 </style>

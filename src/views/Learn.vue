@@ -73,15 +73,28 @@
         </div>
 
         <p>ასევე გასათვალისწინებელია რომ მოპედისთვის დაშვებული მაქსიმალური სიჩქარე არის 45 კილომეტრი საათში.</p>
-    </div>
+
+        <h2>მიმთითებლები ნიშნები</h2>
+        <p>
+        აქ საჭიროა დავიმახსოვროთ რომ ოთკუთხედში ვერტიკალური ისარი რიცხვთან ერთად მიუთითებს ნიშნით აღნიშნული გარემოების სიგრძეს, ხოლო ვერტიკალური ნიშნის გარეშე კი მანძილს. ან მოვუსმინოთ შემდეგ უცნაური ვიდეოს:
+        </p>
+        <youtube id='rU5EiQwDsxc' start=35 end=574> </youtube>
+
+        <h2>შუქნიშნის სიგნალები</h2>
+        <p>ეს კაცი კარგად ხსნის ყველა ასპექტს:</p>
+        <youtube id='N9RYuFXWb5k'></youtube>
+</div>
+
 </template>
 
 <script>
 import Sign from '@/components/sign.vue'
+import Youtube from '@/components/youtube.vue'
 
 export default {
     components: {
-        Sign
+        Sign,
+        Youtube
     }
 
 }
@@ -90,5 +103,10 @@ export default {
 <style>
     .sign{
         max-width: 160px !important;
+    }
+    h2 {
+        border: 1px dashed white;
+        padding: 5px;
+        padding-left: 10px;
     }
 </style>
