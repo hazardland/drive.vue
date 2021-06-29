@@ -1,11 +1,11 @@
 <template>
-    <div style="text-align:center;display:inline-block;margin-right:15px;vertical-align:top;width: 250px; margin-bottom: 25px">
-        <img :src="'./images/'+name+'.svg'" style="width:160px">
-        <div v-if='title'>
-            <span style='max-width:200px;text-align:center;'><small>{{title}}</small></span>
+    <div  class="sign-block">
+        <img :src="'./images/'+name+'.svg'">
+        <div v-if='title' class="sign-title">
+            <span ><small>{{title}}</small></span>
         </div>
-        <div v-if='comment' style="margin-top:5px;">
-            <span style='max-width:250px;text-align:center;color:#ccf'><b>{{comment}}</b></span>
+        <div v-if='comment'  class="sign-description" style="margin-top:5px;">
+            <span ><b>{{comment}}</b></span>
         </div>
     </div>
 </template>
@@ -47,3 +47,51 @@ export default {
     }
 }
 </script>
+<style lang="scss">
+.sign-block{
+    text-align:center;
+    display:inline-block;
+    margin-right:15px;
+    vertical-align:top;
+    width: 250px;
+    margin-bottom:1.125rem;
+    img{
+        margin-bottom: 1rem;
+        width:160px;
+    }
+}
+.sign-description{
+    span{
+        max-width:250px;
+        text-align:center;
+        color:#ccf;
+        font-size:1rem
+    }
+}
+.sign-title{
+    span{
+        max-width:200px;
+        text-align:center;
+        font-size:1rem;
+        line-height:140%;
+        small{
+
+        }
+    }
+}
+@media screen and (max-width:960px){
+    .sign-block{
+        img{
+            width:120px;
+        }
+    }
+    .sign-title,
+    .sign-description{
+        span{
+            font-size:0.8rem
+        }
+    }
+
+}
+
+</style>

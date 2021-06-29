@@ -61,15 +61,17 @@ export default {
 <style>
     .subject {
         cursor: pointer;
-        background: grey;
+        background: #E8E8E8;
         border: 1px solid grey;
         margin: 1px;
         padding: 6px;
         width: 100%;
         display: inline-block;
+        margin-top:0!important;
+        margin-bottom: 10px;
     }
     .active {
-        background: yellow!important;
+        background: #FFFF66;
     }
 
 </style>

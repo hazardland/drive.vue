@@ -33,7 +33,13 @@ export default {
         display: inline-block;
     }
     .active {
-        background: yellow!important;
+        background: #FFFF66!important;
+    }
+    @media screen and (max-width:960px){
+        .categories{
+            display:grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
 
 </style>

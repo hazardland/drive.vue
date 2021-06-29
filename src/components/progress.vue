@@ -36,9 +36,17 @@ export default {
 
 .sticky {
   position: fixed;
+  width: 80%;
+  max-width: 1600px;
   top: 0;
-  width: 100%;
-  margin-left:-8px;
+  left: 0;
+  /*margin-left:-8px;*/
+}
+@media screen and (max-width:960px){
+    .sticky{
+        width: 100%;
+
+    }
 }
 
 </style>

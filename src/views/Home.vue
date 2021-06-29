@@ -9,7 +9,7 @@
         >
         </Progress>
         <modal :visible='!greeted'></modal>
-        <div style='margin-top:10px;display:inline-block'>
+        <div class="status-holder">
             <div class='status'>
                 {{ count }}/{{subject_total}} ბილეთი
             </div>
@@ -17,15 +17,15 @@
                 ყველა: {{subject_total}}
             </div>
             <div class='status' @click='mode("failed")' :class='{active:show=="failed"}'>
-                რაშიც ჩავიჭერი: {{subject_failed}} <div class='red square'></div>
+                ჩავიჭერი: {{subject_failed}} <div class='red square'></div>
             </div>
             <div class='status' @click='mode("learning")' :class='{active:show=="learning"}'>
-                რასაც ვსწავლობ: {{subject_learning}} <div class='blue square'></div>
+                ვსწავლობ: {{subject_learning}} <div class='blue square'></div>
             </div>
             <div class='status' @click='mode("fresh")' :class='{active:show=="fresh"}'>
-                რაც ახალია: {{subject_fresh}} <div class='square'></div>
+                ახალია: {{subject_fresh}} <div class='square'></div>
             </div>
-            <timer ref="timer"></timer>
+            <timer ref="timer" class="my-timer"></timer>
         </div>
         <div class='categories'>
             <category
@@ -36,28 +36,31 @@
             >
             </category>
         </div>
-        <div class='tickets'>
-            <ticket v-for='ticket in filter()'
-                :key='ticket.id'
-                :id='ticket.id'
-                :categories='ticket.categories'
-                :subject='ticket.subject'
-                :question='ticket.question'
-                :crop='ticket.crop'
-                :answers='ticket.answers'
-                :description='ticket.description'
-            >
-            </ticket>
-        </div>
-        <div class='subjects'>
-            <subject
-                v-for='subject in subjects'
-                :key='subject.id'
-                :id='subject.id'
-                :title='subject.title'
-            >
-            </subject>
-        </div>
+        <section class="main-content">
+            <div class='tickets'>
+                <ticket v-for='ticket in filter()'
+                    :key='ticket.id'
+                    :id='ticket.id'
+                    :categories='ticket.categories'
+                    :subject='ticket.subject'
+                    :question='ticket.question'
+                    :crop='ticket.crop'
+                    :answers='ticket.answers'
+                    :description='ticket.description'
+                >
+                </ticket>
+            </div>
+            <div class='subjects'>
+                <subject
+                    v-for='subject in subjects'
+                    :key='subject.id'
+                    :id='subject.id'
+                    :title='subject.title'
+                >
+                </subject>
+            </div>
+        </section>
+
     </div>
 </template>
 
@@ -179,23 +182,39 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
+    .status-holder{
+        margin-top: 15px;
+        display: inline-block;
+        width: 100%;
+        position:relative;
+    }
     .status{
         cursor: pointer;
-        background: darkgrey;
+        background: #E8E8E8;
+        background: #D3D3D3;
         border: 1px solid grey;
         margin: 1px;
         padding: 6px;
         display: inline-block;
+        font-size: 1rem;
     }
     .categories {
     }
+    .main-content{
+        display:flex;
+    }
     .tickets {
-        float: left;
+        display: flex;
+        flex-direction: column;
     }
     .subjects {
         max-width: 200px;
         float:left;
+        div{
+            margin-top:10px;
+
+        }
     }
     .square{
         width:15px;
@@ -208,5 +227,52 @@ export default {
     }
     .blue {
         background-color: blue
+    }
+    .my-timer{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:absolute;
+        right:0;
+        top:0;
+        font-size:1.2rem;
+    }
+
+    @media screen and (max-width:960px){
+        .home{
+            width: calc(100% - 30px);
+            margin-left:auto;
+            margin-right:auto;
+
+        }
+        .status-holder{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .my-timer{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            right:auto;
+            top:auto;
+            font-size:1rem;
+        }
+        .subjects{
+            box-sizing: border-box;
+            background: #101010;
+            position:fixed;
+            right: 15px;
+            top: 1rem;
+            overflow-x:scroll;
+            width: calc(100% - 30px);
+            height:100vh;
+            // padding:1rem;
+            max-width:none;
+            transform: translateX(-100vw);
+        }
+        .subjects.on{
+            transform: translateX(0);
+        }
     }
 </style>
