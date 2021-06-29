@@ -67,13 +67,13 @@ export default {
         .number{
             width: 1.375rem;
             height: 1.375rem;
+            margin-top: 0rem;
 
         }
           .answer-text{
             line-height: 150%;
             font-size: 1rem;
             width: calc(100% - 10px - 1.375rem);
-            margin-top: 0rem;
         }
     }
 </style>
