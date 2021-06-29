@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang ="scss">
     .subject {
         cursor: pointer;
         background: #E8E8E8;
@@ -69,6 +69,15 @@ export default {
         display: inline-block;
         margin-top:0!important;
         margin-bottom: 10px;
+
+        .progress-bar{
+            height: 10px;
+            width: calc(100% - 30px);
+            div{
+                margin-top:0;
+            }
+
+        }
     }
     .active {
         background: #FFFF66;

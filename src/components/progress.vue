@@ -1,6 +1,6 @@
 <template>
 
-    <div style='width:100%;background:white;display:inline-block;border:0.5px solid black; z-index: 99999'
+    <div class="progress-bar"
     :class='{sticky:sticky}'>
         <div style='float:left;height:10px;background:red;width:0%' :style='{width:failed_percent}'></div>
         <div style='float:left;height:10px;background:blue;width:0%' :style='{width:learning_percent}'></div>
@@ -33,11 +33,16 @@ export default {
 </script>
 
 <style>
-
+.progress-bar{
+    width:100%;
+    background:white;
+    display:inline-block;
+    border:0.5px solid black;
+     z-index: 99999;
+}
 .sticky {
   position: fixed;
-  width: 80%;
-  max-width: 1600px;
+  width: 100%;
   top: 0;
   left: 0;
   /*margin-left:-8px;*/

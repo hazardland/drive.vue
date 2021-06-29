@@ -3,11 +3,7 @@
     <div class=routes>
         <router-link  class="my-route" to='/'>ბილეთბი</router-link>
         <router-link class="my-route" to='/learn'>თეორია</router-link>
-        <a href="" class="category-mobile">
-            <svg
-                enable-background="new 0 0 32 32" height="32px" id="svg2" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"><g id="background"><rect fill="none" height="32" width="32"/></g><g id="category"><polygon points="20,20 20,12 12,12 12,14 8,14 8,10 10,10 10,2 2,2 2,10 6,10 6,26 12,26 12,30 20,30 20,22 12,22 12,24.001 8,24    8,16 12,16 12,20  "/></g>
-            </svg>
-        </a>
+
     </div>
     <router-view/>
   </div>
@@ -104,9 +100,7 @@
     .my-route.router-link-exact-active {
         background: #263951;
     }
-    .category-mobile{
-        display:none;
-    }
+
     .page {
         padding-bottom:12rem;
 
@@ -130,7 +124,7 @@
             display: flex;
             align-items:center;
             grid-column-gap: 4px;
-            width: calc(100% - 30px);
+            width: 100%;
         }
         .my-route{
             display:flex;
@@ -143,23 +137,7 @@
             padding:0;
 
         }
-        .category-mobile{
-            display: flex;
-            align-items:center;
-            justify-content:center;
-            width: 40px!important;
-            height: 30px!important;
-            // margin-left:auto!important;
-            background: #3a3b3c;
-            padding:0!important;
-            svg{
-                fill:white;
-                width: 22px;
-                height: 24px;
-                margin-left: 4px;
 
-            }
-        }
         .page {
             padding: 0;
             color: #e4e6eb;

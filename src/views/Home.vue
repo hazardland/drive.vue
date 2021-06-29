@@ -1,5 +1,10 @@
 <template>
     <div class='home'>
+        <a href="javascript:void(0)" class="category-mobile" @click="menu=!menu">
+            <svg
+                enable-background="new 0 0 32 32" height="32px" id="svg2" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"><g id="background"><rect fill="none" height="32" width="32"/></g><g id="category"><polygon points="20,20 20,12 12,12 12,14 8,14 8,10 10,10 10,2 2,2 2,10 6,10 6,26 12,26 12,30 20,30 20,22 12,22 12,24.001 8,24    8,16 12,16 12,20  "/></g>
+            </svg>
+        </a>
         <Progress
             :total='subject_total'
             :failed='subject_failed'
@@ -50,7 +55,7 @@
                 >
                 </ticket>
             </div>
-            <div class='subjects'>
+            <div class='subjects' :class="{on: menu}">
                 <subject
                     v-for='subject in subjects'
                     :key='subject.id'
@@ -143,13 +148,15 @@ export default {
         reset () {
             this.ignore = []
             this.$refs.timer.reset()
+            this.menu = false
         }
     },
     data () {
         return {
             count: 0,
             show: 'all', // fresh, failed, learning, studied
-            ignore: []
+            ignore: [],
+            menu: false
         }
     },
     computed: {
@@ -237,10 +244,32 @@ export default {
         top:0;
         font-size:1.2rem;
     }
-
+    .category-mobile{
+        display:none;
+    }
     @media screen and (max-width:960px){
+        .category-mobile{
+            position:absolute;
+            top: 22px;
+            right: 15px;
+            display: flex;
+            align-items:center;
+            justify-content:center;
+            width: 30px!important;
+            height: 30px!important;
+            // margin-left:auto!important;
+            background: #3a3b3c;
+            padding:0!important;
+            svg{
+                fill:white;
+                width: 22px;
+                height: 24px;
+                margin-left: 4px;
+
+            }
+        }
         .home{
-            width: calc(100% - 30px);
+            width: 100%;
             margin-left:auto;
             margin-right:auto;
 
@@ -267,7 +296,6 @@ export default {
             overflow-x:scroll;
             width: calc(100% - 30px);
             height:100vh;
-            // padding:1rem;
             max-width:none;
             transform: translateX(-100vw);
         }
