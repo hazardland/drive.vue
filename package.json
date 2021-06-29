@@ -44,8 +44,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-        "indent": "off",
-        "quote-props": "off"
+      "indent": "off",
+      "quote-props": "off"
     }
   },
   "browserslist": [
