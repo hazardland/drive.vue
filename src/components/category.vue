@@ -1,7 +1,7 @@
 <template>
     <div class='category'
         :class='{active:($parent.category==id)}'
-        @click='$parent.category=id'
+        @click='click'
     >
         {{ id }}. {{ title }}
     </div>
@@ -12,7 +12,14 @@ export default {
     props: {
         id: Number,
         title: String
+    },
+    methods: {
+        click () {
+            this.$parent.reset()
+            this.$store.commit('category', this.id)
+        }
     }
+
 }
 </script>
 

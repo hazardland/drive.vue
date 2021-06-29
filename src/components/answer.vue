@@ -17,10 +17,8 @@ export default {
     methods: {
         click () {
             if (!this.$parent.clicked) {
-                this.$parent.clicked = this.index
-                if (!this.correct) {
-                    this.$parent.fail()
-                }
+                this.$parent.answer(this.index)
+                this.$store.commit('step', { 'step': this.correct ? 1 : -1, 'ticket': this.$parent.id })
             }
         }
     }
@@ -32,14 +30,13 @@ export default {
         cursor: pointer;
         color: #fff;
         background: linear-gradient(to right, #244e5b 0%,#031d26 50%,#244e5b 100%);
-        width: 456px;
+        width: 459px;
         padding: 20px;
         display: flex;
         align-items: center;
         font-size: 23px!important;
-        font-family: "BPG Rioni",Arial,Sylfaen,sans-serif!important;
         font-weight: 900;
-        border: 3px solid #fff!important;
+        border: 2px solid #fff!important;
     }
     .number{
         color: #042f4f;

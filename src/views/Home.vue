@@ -1,7 +1,31 @@
 <template>
     <div class='home'>
-        <div class='status'>
-            სულ {{count}} ბილეთი
+        <Progress
+            :total='subject_total'
+            :failed='subject_failed'
+            :learning='subject_learning'
+            :studied='subject_studied'
+            :sticky='true'
+        >
+        </Progress>
+        <modal :visible='!greeted'></modal>
+        <div style='margin-top:10px;display:inline-block'>
+            <div class='status'>
+                {{ count }}/{{subject_total}} ბილეთი
+            </div>
+            <div class='status' @click='mode("all")' :class='{active:show=="all"}'>
+                ყველა: {{subject_total}}
+            </div>
+            <div class='status' @click='mode("failed")' :class='{active:show=="failed"}'>
+                რაშიც ჩავიჭერი: {{subject_failed}} <div class='red square'></div>
+            </div>
+            <div class='status' @click='mode("learning")' :class='{active:show=="learning"}'>
+                რასაც ვსწავლობ: {{subject_learning}} <div class='blue square'></div>
+            </div>
+            <div class='status' @click='mode("fresh")' :class='{active:show=="fresh"}'>
+                რაც ახალია: {{subject_fresh}} <div class='square'></div>
+            </div>
+            <timer ref="timer"></timer>
         </div>
         <div class='categories'>
             <category
@@ -41,46 +65,114 @@
 import Ticket from '@/components/ticket.vue'
 import Subject from '@/components/subject.vue'
 import Category from '@/components/category.vue'
-import tickets from '@/data/tickets.json'
-import categories from '@/data/categories.json'
-import subjects from '@/data/subjects.json'
+import Progress from '@/components/progress.vue'
+import Timer from '@/components/timer.vue'
+import Modal from '@/components/modal.vue'
 
 export default {
     name: 'Home',
     components: {
         Ticket,
         Subject,
-        Category
+        Category,
+        Progress,
+        Timer,
+        Modal
     },
     methods: {
         filter () {
-            const result = {}
+            const result = []
             let count = 0
-            for (const [key, ticket] of Object.entries(this.tickets)) {
+            // for (const ticket of Object.values(this.tickets)) {
+            for (const ticket of this.tickets) {
                 let match = true
-                if (ticket.subject !== this.subject) {
-                    match = false
+                if (!this.ignore.includes(ticket.id)) {
+                    if (ticket.subject !== this.subject) {
+                        match = false
+                    }
+                    if (!ticket.categories.includes(this.category)) {
+                        match = false
+                    }
+                    if (match && this.show !== 'all') {
+                        const score = this.$store.state.scores[ticket.id]
+
+                        if (score === null) {
+                            if (this.show !== 'fresh') {
+                                match = false
+                            }
+                        } else {
+                            if (this.show === 'fresh') {
+                                if (this.score !== null) {
+                                    match = false
+                                }
+                            } if (this.show === 'failed') {
+                                if (score >= 0) {
+                                    match = false
+                                }
+                            } else if (this.show === 'learning') {
+                                if (score >= 3) {
+                                    match = false
+                                }
+                            } else if (this.show === 'studied') {
+                                if (score <= 3) {
+                                    match = false
+                                }
+                            }
+                        }
+                    }
                 }
-                if (!ticket.categories.includes(this.category)) {
-                    match = false
-                }
+
                 if (match) {
-                    result[key] = ticket
+                    result.push(ticket)
                     count++
                 }
             }
             this.count = count
             return result
+            // return result.sort(function () {
+            //     return 0.5 - Math.random()
+            // })
+        },
+        mode (show) {
+            this.reset()
+            this.show = show
+        },
+        reset () {
+            this.ignore = []
+            this.$refs.timer.reset()
         }
     },
     data () {
         return {
-            subject: 1,
-            category: 2,
             count: 0,
-            tickets: tickets,
-            categories: categories,
-            subjects: subjects
+            show: 'all', // fresh, failed, learning, studied
+            ignore: []
+        }
+    },
+    computed: {
+        category () {
+            return this.$store.state.category
+        },
+        subject () {
+            return this.$store.state.subject
+        },
+        subject_failed () {
+            return this.$store.state.subject_failed[this.subject]
+        },
+        subject_studied () {
+            return this.$store.state.subject_studied[this.subject]
+        },
+        subject_learning () {
+            return this.$store.state.subject_learning[this.subject]
+        },
+        subject_fresh () {
+            return this.$store.state.subject_fresh[this.subject]
+        },
+        subject_total () {
+            return this.$store.state.subject_total[this.subject]
+        },
+        greeted () {
+            return this.$store.state.greeted
         }
     }
 }
@@ -104,5 +196,17 @@ export default {
     .subjects {
         max-width: 200px;
         float:left;
+    }
+    .square{
+        width:15px;
+        height:15px;
+        background:white;
+        display:inline-block;
+        vertical-align:middle;
+        margin-top:-3px;
+        border:1px solid black;
+    }
+    .blue {
+        background-color: blue
     }
 </style>

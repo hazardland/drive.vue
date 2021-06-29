@@ -1,26 +1,13 @@
-# drive
+# მართვის მოწმობის მასწავლებელი
+აპლიკაცია იმახსოვრებს ბილეთებს რომელშიც იჭრებით და იძლევა მოგვიანებით ნახვის საშუალებას, ნასწავლ ბილეთად თვლის ისეთ ბილეთს რომელზეც სხვადასხვა დროს 3-ჯერ ზედიზედ სწორად გაეცით პასუხი, ასევე თვალსაჩინოდ ასახავს თავების სწავლის პროცესს სხვადასხვა ინდიკატორებით. ყოველ ჩატვირთვაზე ბილეთები თავში ლაგდება შემთხვევითი მიმდევრობით, ასევე პასუხები ბილეთებში. **როდესაც ყველა თავის ქვეშ ყველა პროგრესბარი მთლიანად გამწვანდება შეგიძლიათ თამამად გახვიდეთ გამოცდაზე.**
+
+ონლაინ ვერსია: https://hazardland.github.io/drive.vue/
 
 ![Demo](./readme.png)
 
-## Project setup
+## Setup
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
-```
-
-### Compiles and minifies for production
-```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

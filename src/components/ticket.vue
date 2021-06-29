@@ -1,8 +1,13 @@
 <template>
-    <div class='ticket'>
-        <img :src="'/images/'+id+'.jpg'" v-if='crop!=3'>
-        <div class='question'>
-            <div class='id'>{{ id }}:</div>
+    <div class='ticket' style="position:relative;">
+        <div class='indicator' :class='{red:failed, green:studied, blue:learning}'>
+            {{$store.state.scores[this.id]}}
+        </div>
+        <img :src="'./images/'+id+'.jpg'" v-if='crop!=3'>
+        <div class='question' @click='info=!info'>
+            <div>
+                <span class='id'>{{ id }}:</span>
+            </div>
             {{ question }}
         </div>
         <div class='answers'>
@@ -13,7 +18,7 @@
                 :correct='answer.correct'>
             </answer>
         </div>
-        <div class='description' v-show='false'>
+        <div class='description' v-show='info'>
             {{ description }}
         </div>
     </div>
@@ -37,7 +42,8 @@ export default {
     },
     data () {
         return {
-            clicked: false
+            clicked: false,
+            info: false
         }
     },
     methods: {
@@ -46,12 +52,26 @@ export default {
                 return 0.5 - Math.random()
             })
         },
-        fail () {
-            return true
+        answer (id) {
+            this.clicked = id
+            this.$parent.ignore.push(this.id)
         }
     },
-    mounted () {
-        this.answers = this.random(this.answers)
+    // mounted () {
+    //     this.answers = this.random(this.answers)
+    // },
+    computed: {
+        failed () {
+            return this.$store.state.scores[this.id] < 0
+        },
+        studied () {
+            return this.$store.state.scores[this.id] >= 3
+        },
+        learning () {
+            return this.$store.state.scores[this.id] !== null &&
+                   this.$store.state.scores[this.id] >= 0 &&
+                   this.$store.state.scores[this.id] < 3
+        }
     }
 }
 </script>
@@ -62,6 +82,7 @@ export default {
         padding: 1px;
         max-width: 1006px;
         margin-bottom: 30px;
+        position: relative;
     }
     .id{
 
@@ -71,15 +92,43 @@ export default {
         color: #222;
         color: #fff;
         padding: 10px;
-        border-bottom: 3px solid #fff;
         background-color: rgba(35, 47, 54, .9);
+        border: 3px solid white;
+        border-bottom: 1px solid white;
         text-align: center;
         font-size: 24px;
         font-weight: 900;
+        cursor: pointer;
     }
     .answers{
         display: flex!important;
         flex-wrap: wrap;
         width: 100%;
+    }
+    .indicator{
+        height:30px;
+        width:30px;
+        position:absolute;
+        top:5px;
+        left:5px;
+        text-align: center;
+        color: white;
+        line-height: 30px;
+    }
+    .description{
+        color:silver;
+        width: 982px;
+        padding: 10px;
+        border: 2px solid white;
+        font-size: 20px;
+    }
+    .red{
+        background-color: red;
+    }
+    .blue{
+        background-color: blue;
+    }
+    .green{
+        background-color: green;
     }
 </style>
