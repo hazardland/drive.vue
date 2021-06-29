@@ -5,10 +5,13 @@
         </div>
         <img :src="'./images/'+id+'.jpg'" v-if='crop!=3'>
         <div class='question' @click='info=!info'>
-            <div>
+            <div class="question-number">
                 <span class='id'>{{ id }}:</span>
             </div>
-            {{ question }}
+            <div class="question-text">
+                {{ question }}
+
+            </div>
         </div>
         <div class='answers'>
             <answer v-for='(answer, index) in answers'
@@ -84,43 +87,49 @@ export default {
         margin-bottom: 30px;
         position: relative;
     }
-    .id{
-
+    img{
+        width:100%;
     }
     .question{
         margin: 0;
-        color: #222;
         color: #fff;
-        padding: 10px;
+        padding: 1.25rem 1.125rem 2rem;
         background-color: rgba(35, 47, 54, .9);
-        border: 3px solid white;
+        border: 2px solid white;
         border-bottom: 1px solid white;
-        text-align: center;
-        font-size: 24px;
-        font-weight: 900;
+        font-size: 1.375rem;
+        line-height: 150%;
+        font-weight: 600;
         cursor: pointer;
     }
+    .question-number{
+        text-align: center;
+        margin-bottom: 0.5rem;
+
+    }
     .answers{
-        display: flex!important;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         width: 100%;
     }
     .indicator{
-        height:30px;
-        width:30px;
-        position:absolute;
-        top:5px;
-        left:5px;
+        height: 1.875rem;
+        width: 1.875rem;
+        position: absolute;
+        top:  5px;
+        left: 5px;
         text-align: center;
         color: white;
         line-height: 30px;
     }
     .description{
-        color:silver;
-        width: 982px;
-        padding: 10px;
-        border: 2px solid white;
-        font-size: 20px;
+        box-sizing: border-box;
+        width: 100%;
+        color: #ffffff;
+        padding: 1.125rem;
+        border: 1px solid white;
+        font-size: 1.25rem;
+        line-height: 140%;
     }
     .red{
         background-color: red;
@@ -130,5 +139,24 @@ export default {
     }
     .green{
         background-color: green;
+    }
+
+    @media screen and (max-width: 960px){
+        .answers{
+            display: grid;
+            grid-template-columns: 1fr;
+            width: 100%;
+        }
+        .question{
+            padding: 1.25rem 1.125rem 2rem;
+            font-size: 1rem;
+            line-height: 150%;
+        }
+        .description{
+            width: 100%;
+            padding: 1rem;
+            font-size: .9rem;
+        }
+
     }
 </style>
