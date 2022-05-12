@@ -13,7 +13,7 @@
             :sticky='true'
         >
         </Progress>
-        <modal :visible='!greeted'></modal>
+        <!--<modal :visible='!greeted'></modal>-->
         <div class="status-holder">
             <div class='status'>
                 {{ count }}/{{subject_total}} ბილეთი

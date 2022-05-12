@@ -21,6 +21,13 @@
                 :correct='answer.correct'>
             </answer>
         </div>
+        <div class='choices'>
+            <choice v-for='(answer, index) in answers'
+                :key='index'
+                :index='index+1'
+                :correct='answer.correct'>
+            </choice>
+        </div>
         <div class='description' v-show='info'>
             {{ description }}
         </div>
@@ -29,10 +36,12 @@
 
 <script>
 import Answer from '@/components/answer.vue'
+import Choice from '@/components/choice.vue'
 
 export default {
     components: {
-        Answer
+        Answer,
+        Choice
     },
     props: {
         id: Number,
